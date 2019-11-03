@@ -6,9 +6,9 @@
 
 **对于中文命名实体识别，基于字符比基于词的方法效果好。**
 
-## 基于规则的方法
+## 1. 基于规则的方法
 
-## 基于传统机器学习的方法
+## 2. 基于传统机器学习的方法
 
 标准流程分为Training和Predicting两个阶段。
 
@@ -23,7 +23,7 @@
 * 获取测试数据
 * 运行训练好的模型给每个token做标注
 
-## 基于深度学习的方法
+## 3. 基于深度学习的方法
 
 paper list:
 
@@ -33,9 +33,9 @@ paper list:
 * Adversarial Learning for Chinese NER from Crowd Annotations(2018)
 * Adaptive Co-Attention Network for Named Entity Recognition in Tweets(2018)
 
-### LSTM+CRF
+### 3.1 LSTM+CRF
 
-### IDCNN+CRF paper1
+### 3.2 IDCNN+CRF paper1
 
 目前在NLP领域用的最多的还是要数RNN这一个大类，因为RNN简直就是为文本这类序列数据而生的。但是在实现中也会有很多问题，所以这时候就可能试试CNN。相对于RNN，CNN由于可以并行训练，使得其训练速度远远高与RNN，可以使得在精度不变或损失一点的情况下提高效率。
 
@@ -55,19 +55,19 @@ IDCNN对输入句子的每一个字生成一个logits，这里就和biLSTM模型
 
 在biLSTM或者IDCNN这样的深度网络模型后面接上CRF层是一个序列标注很常见的方法。biLSTM或者IDCNN计算出的是每个词分类的概率，而CRF层引入序列的转移概率，最终计算出loss反馈回网络。
 
-### Lattice\_LSTM+CRF paper2
+### 3.3 Lattice\_LSTM+CRF paper2
 
 Lattice LSTM：LSTM的变体
 
-1. 基于词的LSTM-CRF
+基于词的LSTM-CRF
 
 一般的pipeline是对文本进行分词之后embedding后输入深度网络预测序列中单词的类别标记。但是这样的话会受限于分词那一步的表现，也就是说如果分词过程效果不好的话，会进一步影响整个NER模型的误差。而对于NER任务中，许多词都是OOV。
 
-2. 基于字的LSTM-CRF
+基于字的LSTM-CRF
 
 那么把词输入改为字输入是不是会有所改进呢？答案是肯定的。因为字向量可以完美克服上述分词过程引入的误差。但是如果单纯采用字向量的话会丢失句子中词语之间的内在信息。（当然基于该问题，学者们也提出了很多解决方案：例如利用segmentation information作为NER模型的soft features；使用multi-task learning等等）
 
-3. Lattice LSTM
+Lattice LSTM
 
 将潜在的词语信息融合到基于字模型的传统LSTM-CRF中去，而其中潜在的词语信息是通过外部词典获得的。Lattice LSTM模型会在字向量的基础上额外获取词特征的信息。
 
