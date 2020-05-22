@@ -80,13 +80,37 @@ Lattice LSTM：LSTM的变体
 
 ### 3.4 ATL for NER paper3
 
+对抗迁移学习：**充分利用共享任务之间的 边界信息同时过滤掉分词任务的特有信息以免干扰NER任务。此外，因为每个字符在进行实体预测时都可以提供非常重要的信息，所以本文还引入了self-attention机制，在预测实体类别时，利用自注意力机制捕捉两个实体之间的长期依赖关系。**
+
+* 对抗迁移学习（Adversarial Transfer Learning）
+* 任务共享：本文中是将NER与CWS（Chinese Word Segment）两个类似的任务综合训练。
+* self-attention：为了解决长程依赖问题。
+
+对于以下三个网络，输入均是字符级别的Embedding。
+
+#### NER任务学习网络
+
+双向LSTM（私有）
+
+#### CWS任务学习网络
+
+双向LSTM（私有）
+
+#### 对抗学习网络
+
+双向LSTM（公有，NER任务和CWS任务共享）
+
+对抗学习（Adversarial Training）用来预测当前输入是哪一个task（NER或者CWS），希望Shared BiLSTM学到的信息跟具体任务无关，而跟NER和CWS任务都有关。（Transfer learning to learn task-shared information, adversarial training to remove task-specific information.）
+
 # 参考
 
 [Chinese NER Using Lattice LSTM论文笔记](https://www.jianshu.com/p/cdd2061f057b)
 
-[(很好)Chinese NER Using Lattice LSTM](https://blog.csdn.net/sinat_18665801/article/details/90578208)
+[(好文)Chinese NER Using Lattice LSTM](https://blog.csdn.net/sinat_18665801/article/details/90578208)
 
 [Chinese NER Using Lattice LSTM论文笔记](https://www.jianshu.com/p/cdd2061f057b)
 
 [利用Lattice LSTM的最优中文命名实体识别方法](http://baijiahao.baidu.com/s?id=1604786068701856320&wfr=spider&for=pc)
+
+[(好文)]()
 
